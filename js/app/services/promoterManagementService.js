@@ -39,19 +39,19 @@ app.factory('promoterManagementService',['$rootScope','$http', '$filter', 'promo
 
   promoterManagementService.listCriticalPromoters = function(){
     var promoters =  $filter('filter')(promoterList, isCritical());
-    promoterManagementBillingService.billWriteOperation(promoters.length);
+    promoterManagementBillingService.billReadOperation(promoters.length);
     return promoters;
   };
 
   promoterManagementService.listMostSucessfulPromoters = function(){
     var promoters = $filter('orderBy')(promoterList, 'Earnings', true);
-    promoterManagementBillingService.billWriteOperation(promoters.length);
+    promoterManagementBillingService.billReadOperation(promoters.length);
     return promoters;
   };
 
   promoterManagementService.listProblematicPromoters = function(){
     var promoters = $filter('filter')(promoterList, isProblematic());
-    promoterManagementBillingService.billWriteOperation(promoters.length);
+    promoterManagementBillingService.billReadOperation(promoters.length);
     return promoters;
   };
 
