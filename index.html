@@ -44,7 +44,7 @@
 }
 </style></head>
 
-  <body ng-app="promoterManagementApp">
+  <body ng-app="promoterManagementApp" ng-controller="promoterContactListController as promoterContactListController">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -65,15 +65,20 @@
       </div>
     </nav>
 
-    <div class="container-fluid" ng-controller="promoterContactListController as promoterContactListController">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Listar Promoters <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a ng-click='listAllPromoters()'>Listar Promoters <span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Lista de Promoters</h1>
+          <a class="btn btn-lg btn-success" ng-click='listMostSucessfulPromoters()'>Listar Promoters de Maior Sucesso </a>
+          <a class="btn btn-lg btn-warning" ng-click='listProblematicPromoters()'>Listar Promoters Com Avaliação Insatisfatória </a>
+          <a class="btn btn-lg btn-danger" ng-click='listCriticalPromoters()'>Listar Promoters Com Avaliação Crítica </a>
+          <br>
+          <br>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -85,16 +90,42 @@
               </thead>
               <tbody>
                 <tr ng-repeat="promoter in promoters">
-                  <td>{{promoter.Name}}</td>
+                  <td><a data-toggle="modal" data-target="#details-modal" ng-click='selectPromoter(promoter.PromoterId)'>{{promoter.Name}}</a></td>
                   <td>{{promoter.Rating}}</td>
                   <td>{{promoter.Earnings | currency:"R$"}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <a class="btn btn-lg btn-default" ng-click='saveCurrentList()'>Salvar Lista</a>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="details-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Detalhes do promoter</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              <b>ID:</b> {{selectedPromoter.PromoterId}}<br>
+              <b>Nome:</b> {{selectedPromoter.Name}}<br>
+              <b>Email:</b> {{selectedPromoter.Email}}<br>
+              <b>Endereço:</b> {{selectedPromoter.Address}}<br>
+              <b>Telefone:</b> {{selectedPromoter.Phone}}<br>
+              <b>Qualificação:</b> {{selectedPromoter.Rating}}
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -109,5 +140,10 @@
     <script src="./js/angular.min.js"></script>
     <script src="./js/angular-locale_pt-br.js"></script>
     <script src="./js/app/app.js"></script>
+    <script src="./js/app/services/promoterService.js"></script>
+    <script src="./js/app/services/promoterRatingService.js"></script>
+    <script src="./js/app/services/promoterEarningsService.js"></script>
+    <script src="./js/app/services/promoterManagementBillingService.js"></script>
+    <script src="./js/app/services/promoterManagementService.js"></script>
     <script src="./js/app/controllers/promoterContactListController.js"></script>
 </body><object id="b8f949c8-98ab-bdac-c9cb-0a884baea082" width="0" height="0" type="application/gas-events-abn"></object></html>

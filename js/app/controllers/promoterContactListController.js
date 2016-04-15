@@ -1,17 +1,24 @@
-app.controller("promoterContactListController", ['$scope', function($scope) {
-    $scope.promoters = [{
-        Name: "João",
-        Rating: 8,
-        Earnings: 1234.50
-      },
-      {
-        Name: "Pedro",
-        Rating: 9,
-        Earnings: 4234.50
-      },
-      {
-        Name: "Luis",
-        Rating: 7,
-        Earnings: 5434.50
-      }];
+app.controller("promoterContactListController", ['$scope', 'promoterManagementService', function($scope, promoterManagementService) {
+    $scope.promoters = promoterManagementService.listAllPromoters();
+    $scope.selectedPromoter = {};
+    $scope.selectPromoter = function(promoterId){
+      $scope.selectedPromoter = promoterManagementService.getDetailsForPromoter(promoterId)
+    };
+
+    $scope.listProblematicPromoters = function(){
+      $scope.promoters = promoterManagementService.listProblematicPromoters();
+    };
+
+    $scope.listCriticalPromoters = function(){
+      $scope.promoters = promoterManagementService.listCriticalPromoters();
+    };
+
+    $scope.listMostSucessfulPromoters = function(){
+      $scope.promoters = promoterManagementService.listMostSucessfulPromoters();
+    };
+
+    $scope.listAllPromoters = function(){
+      $scope.promoters = promoterManagementService.listAllPromoters();
+    };
+
 }]);
