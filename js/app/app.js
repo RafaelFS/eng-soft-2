@@ -1,1 +1,1 @@
-var app = angular.module('promoterManagementApp', []);
+var app = angular.module('promoterManagementApp', ['LocalStorageModule']);

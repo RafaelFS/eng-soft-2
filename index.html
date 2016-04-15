@@ -77,6 +77,10 @@
           <a class="btn btn-lg btn-success" ng-click='listMostSucessfulPromoters()'>Listar Promoters de Maior Sucesso </a>
           <a class="btn btn-lg btn-warning" ng-click='listProblematicPromoters()'>Listar Promoters Com Avaliação Insatisfatória </a>
           <a class="btn btn-lg btn-danger" ng-click='listCriticalPromoters()'>Listar Promoters Com Avaliação Crítica </a>
+          <select ng-model="selectedSavedList">
+            <option></option>
+            <option ng-repeat='list in savedLists' value='{{list}}'>Lista {{list}}</option>
+          </select>
           <br>
           <br>
           <div class="table-responsive">
@@ -139,6 +143,7 @@
     <script src="./index_files/ie10-viewport-bug-workaround.js"></script>
     <script src="./js/angular.min.js"></script>
     <script src="./js/angular-locale_pt-br.js"></script>
+    <script src="./js/angular-local-storage.js"></script>
     <script src="./js/app/app.js"></script>
     <script src="./js/app/services/promoterService.js"></script>
     <script src="./js/app/services/promoterRatingService.js"></script>

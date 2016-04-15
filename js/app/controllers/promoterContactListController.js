@@ -1,6 +1,8 @@
 app.controller("promoterContactListController", ['$scope', 'promoterManagementService', 'promoterListService', function($scope, promoterManagementService, promoterListService) {
     $scope.promoters = promoterManagementService.listAllPromoters();
     $scope.selectedPromoter = {};
+    getSavedLists();
+
     $scope.selectPromoter = function(promoterId){
       $scope.selectedPromoter = promoterManagementService.getDetailsForPromoter(promoterId)
     };
@@ -23,6 +25,18 @@ app.controller("promoterContactListController", ['$scope', 'promoterManagementSe
 
     $scope.saveCurrentList = function(){
       promoterListService.saveList($scope.promoters);
+      getSavedLists();
     }
+
+    $scope.$watch(function () { return $scope.selectedSavedList; }, function(){
+      if($scope.selectedSavedList){
+        $scope.promoters = promoterListService.getList($scope.selectedSavedList);
+      }
+    });
+
+    function getSavedLists() {
+      $scope.savedLists =  promoterListService.getSavedLists();
+    }
+
 
 }]);
