@@ -1,0 +1,77 @@
+extends layout
+
+block content
+  .page-wrapper(ng-controller='promoterContactListController as promoterContactListController')
+    nav.navbar.navbar-inverse.navbar-fixed-top
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') eVent
+        #navbar.navbar-collapse.collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='#')
+    .container-fluid
+      .row
+        .col-sm-3.col-md-2.sidebar
+          ul.nav.nav-sidebar
+            li.active
+              a(ng-click='listAllPromoters()')
+                | Listar Promoters 
+                span.sr-only (current)
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+          h1.page-header Lista de Promoters
+          a.btn.btn-lg.btn-success(ng-click='listMostSucessfulPromoters()') Maior Sucesso 
+          a.btn.btn-lg.btn-warning(ng-click='listProblematicPromoters()') Avaliação Insatisfatória 
+          a.btn.btn-lg.btn-danger(ng-click='listCriticalPromoters()') Avaliação Crítica 
+          select(ng-model='selectedSavedList')
+            option
+            option(ng-repeat='list in savedLists', value='{{list}}') Lista {{list}}
+          br
+          br
+          .table-responsive
+            table.table.table-striped
+              thead
+                tr
+                  th Nome
+                  th Qualificação
+                  th Total de Faturamento
+              tbody
+                tr(ng-repeat='promoter in promoters')
+                  td
+                    a(data-toggle='modal', data-target='#details-modal', ng-click='selectPromoter(promoter.PromoterId)') {{promoter.Name}}
+                  td {{promoter.Rating}}
+                  td {{promoter.Earnings | currency:"R$"}}
+          a.btn.btn-lg.btn-default(ng-click='saveCurrentList()') Salvar Lista
+    #details-modal.modal.fade(tabindex='-1', role='dialog')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4.modal-title Detalhes do promoter
+          .modal-body
+            p
+              b ID:
+              |  {{selectedPromoter.PromoterId}}
+              br
+              b Nome:
+              |  {{selectedPromoter.Name}}
+              br
+              b Email:
+              |  {{selectedPromoter.Email}}
+              br
+              b Endereço:
+              |  {{selectedPromoter.Address}}
+              br
+              b Telefone:
+              |  {{selectedPromoter.Phone}}
+              br
+              b Qualificação:
+              |  {{selectedPromoter.Rating}}
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
